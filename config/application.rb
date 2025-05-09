@@ -1,5 +1,5 @@
 require_relative "boot"
-
+# require 'lib/tasks/json_web_token'
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,6 +15,8 @@ module Social
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    # config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths << Rails.root.join('lib')
 
     # Configuration for the application, engines, and railties goes here.
     #
