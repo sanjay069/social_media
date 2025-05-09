@@ -1,4 +1,36 @@
-class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+# class ApplicationController < ActionController::API
+
+#   def not_found
+#     render json: { error: 'not_found' }
+#   end
+
+#   def authorize_request
+#     header = request.headers['Authorization']
+#     header = header.split(' ').last if header
+#     begin
+#       @decoded = JsonWebToken.decode(header)
+#       @current_user = User.find(@decoded[:user_id])
+#     rescue ActiveRecord::RecordNotFound => e
+#       render json: { errors: e.message }, status: :unauthorized
+#     rescue JWT::DecodeError => e
+#       render json: { errors: e.message }, status: :unauthorized
+#     end
+#   end
+# end
+
+class ApplicationController < ActionController::API
+  include JsonWebToken
+
+  before_action :authorize_request
+
+  private
+
+  def authorize_request
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
+
+    decoded = JsonWebToken.encode(header)
+    @current_user = User.find(decoded[:user_id])
+ 
+  end
 end
