@@ -1,36 +1,32 @@
-# class ApplicationController < ActionController::API
-
-#   def not_found
-#     render json: { error: 'not_found' }
-#   end
-
-#   def authorize_request
-#     header = request.headers['Authorization']
-#     header = header.split(' ').last if header
-#     begin
-#       @decoded = JsonWebToken.decode(header)
-#       @current_user = User.find(@decoded[:user_id])
-#     rescue ActiveRecord::RecordNotFound => e
-#       render json: { errors: e.message }, status: :unauthorized
-#     rescue JWT::DecodeError => e
-#       render json: { errors: e.message }, status: :unauthorized
-#     end
-#   end
-# end
-
 class ApplicationController < ActionController::API
-  include JsonWebToken
+    # before_action :authorized
 
-  before_action :authorize_request
+    def encode_token(payload)
+        JWT.encode(payload, 'hellomars1211') 
+    end
 
-  private
+    def decoded_token
+        header = request.headers['Authorization']
+        if header
+            token = header.split(" ")[1]
+            begin
+                JWT.decode(token, 'hellomars1211', true, algorithm: 'HS256')
+            rescue JWT::DecodeError
+                nil
+            end
+        end
+    end
 
-  def authorize_request
-    header = request.headers['Authorization']
-    header = header.split(' ').last if header
+    def current_user 
+        if decoded_token
+            user_id = decoded_token[0]['user_id']
+            @user = User.find_by(id: user_id)
+        end
+    end
 
-    decoded = JsonWebToken.encode(header)
-    @current_user = User.find(decoded[:user_id])
- 
-  end
+    def authorized
+        unless !!current_user
+        render json: { message: 'Please log in' }, status: :unauthorized
+        end
+    end
 end
