@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-
+gem 'responders'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -27,6 +27,7 @@ gem 'jwt'
 gem 'rack-cors'
 gem 'active_model_serializers'
 gem 'cancancan'
+gem "image_processing", ">= 1.2"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

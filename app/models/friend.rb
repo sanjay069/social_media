@@ -1,5 +1,8 @@
 class Friend < ApplicationRecord
-  # enum role: %i[user student staff teacher admin]
+	belongs_to :user
+	has_many :likes
+	has_one_attached :image
+  enum role: %i[user student staff teacher admin]
   enum :role, { joined: 0, canceled: 1 }
 
   after_initialize :set_default_role, if: :new_record?

@@ -1,5 +1,5 @@
 class FriendsController < ApplicationController
-    load_and_authorize_resource
+  load_and_authorize_resource
 
   before_action :set_friend, only: %i[ show edit update destroy ]
 
@@ -27,10 +27,12 @@ class FriendsController < ApplicationController
   def create
     @friend = Friend.new(friend_params)
 
-    respond_to do |format|
+    respond_with do |format|
       if @friend.save
         format.html { redirect_to @friend, notice: "Friend was successfully created." }
-        format.json { render :show, status: :created, location: @friend }
+        # format.json { render :show, status: :created, location: @friend }
+        format.json { render(json: @friend ) }
+
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @friend.errors, status: :unprocessable_entity }
@@ -40,7 +42,7 @@ class FriendsController < ApplicationController
 
   # PATCH/PUT /friends/1 or /friends/1.json
   def update
-    respond_to do |format|
+    respond_with do |format|
       if @friend.update(friend_params)
         format.html { redirect_to @friend, notice: "Friend was successfully updated." }
         format.json { render :show, status: :ok, location: @friend }
@@ -69,6 +71,8 @@ class FriendsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def friend_params
-      params.expect(friend: [ :name, :email, :phone ])
+      # debugger
+      # params.expect(friend: [ :name, :email, :phone, :image ])
+      params.require(:friend).permit(:name, :email, :phone, :image)
     end
 end

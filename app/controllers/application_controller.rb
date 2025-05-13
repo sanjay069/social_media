@@ -1,6 +1,11 @@
-class ApplicationController < ActionController::API
-    # before_action :authorized
+require "application_responder"
 
+class ApplicationController < ActionController::API
+  self.responder = ApplicationResponder
+  respond_to :html
+
+    # before_action :authorized
+# include ActionController::MimeResponds
     def encode_token(payload)
         JWT.encode(payload, 'hellomars1211') 
     end
