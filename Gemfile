@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-
+gem 'responders'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -16,9 +16,18 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
+# Use Json Web Token (JWT) for token based authentication
+# gem 'jwt'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
+gem 'bcrypt', '~> 3.1.7'
+gem 'jwt'
+gem 'rack-cors'
+gem 'active_model_serializers'
+gem 'cancancan'
+gem "image_processing", ">= 1.2"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
