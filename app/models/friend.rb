@@ -1,6 +1,7 @@
 class Friend < ApplicationRecord
-	belongs_to :user
+	# belongs_to :user
   	has_many :likes, dependent: :destroy
+  	has_many :comments, dependent: :destroy
 	has_one_attached :image
   # enum role: %i[user student staff teacher admin]
   # enum :role, { joined: 0, canceled: 1 }

@@ -26,18 +26,19 @@ class FriendsController < ApplicationController
   # POST /friends or /friends.json
   def create
     @friend = Friend.new(friend_params)
+    # debugger
+    @friend.save
+    # respond_with do |format|
+    #   if @friend.save
+    #     format.html { redirect_to @friend, notice: "Friend was successfully created." }
+    #     # format.json { render :show, status: :created, location: @friend }
+    #     format.json { render(json: @friend ) }
 
-    respond_with do |format|
-      if @friend.save
-        format.html { redirect_to @friend, notice: "Friend was successfully created." }
-        # format.json { render :show, status: :created, location: @friend }
-        format.json { render(json: @friend ) }
-
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @friend.errors, status: :unprocessable_entity }
-      end
-    end
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @friend.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /friends/1 or /friends/1.json
