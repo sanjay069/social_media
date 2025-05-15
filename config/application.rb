@@ -1,5 +1,5 @@
 require_relative "boot"
-
+# require 'lib/tasks/json_web_token'
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -8,13 +8,18 @@ Bundler.require(*Rails.groups)
 
 module Social
   class Application < Rails::Application
+    # Use the responders controller from the responders gem
+    config.app_generators.scaffold_controller :responders_controller
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
-
+    config.middleware.use ActionDispatch::Flash
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    # config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths << Rails.root.join('lib')
 
     # Configuration for the application, engines, and railties goes here.
     #
